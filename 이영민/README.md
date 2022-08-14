@@ -193,3 +193,160 @@ ShaderLab 스크립트와 함께 CG Shader Code를 사용하지만, 좀 더 본�
 </div>
 
 </details>
+
+<details>
+
+<summary> 2주차 </summary>
+
+<div markdown = “1”>
+
+<ol>
+
+```csharp
+Shader "Custom/NewSurfaceShader 1"
+{
+    Properties /// properties
+    {
+        _Color ("Color", Color) = (1,1,1,1)
+        _MainTex ("Albedo (RGB)", 2D) = "white" {}
+        _Glossiness ("Smoothness", Range(0,1)) = 0.5
+        _Metallic ("Metallic", Range(0,1)) = 0.0
+    }/// /properties
+    SubShader /// Shader
+    {
+        Tags { "RenderType"="Opaque" }
+        LOD 200
+
+        CGPROGRAM /// CG Shader Code
+        #pragma surface surf Standard fullforwardshadows
+
+        #pragma target 3.0
+
+        sampler2D _MainTex;
+
+        struct Input
+        {
+            float2 uv_MainTex;
+        };
+
+        half _Glossiness;
+        half _Metallic;
+        fixed4 _Color;
+
+        UNITY_INSTANCING_BUFFER_START(Props)
+
+        UNITY_INSTANCING_BUFFER_END(Props)
+
+        void surf (Input IN, inout SurfaceOutputStandard o)
+        {
+            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            o.Albedo = c.rgb;
+            o.Metallic = _Metallic;
+            o.Smoothness = _Glossiness;
+            o.Alpha = c.a;
+        }
+        ENDCG /// /CG Shader Code
+    }/// /Shader
+    FallBack "Diffuse"
+}
+```
+
+---
+
+> **Properties**
+> 
+
+**인터페이스를 제작하는 영역**
+
+<details>
+
+<summary> Image </summary>
+
+<div markdown = “1”>
+
+![Untitled](https://user-images.githubusercontent.com/90912270/183640434-50ae2a09-96f9-4826-91d6-a0f2ad546ff4.png)
+
+</div>
+
+</details>
+
+> **Shader**
+> 
+
+**Shader를 작성하는 부분**
+
+이 영역안에 CG Shader Code도 포함되어 있다.
+
+> **CG Shader Code**
+> 
+
+**유니티 자체 스크립트가 아닌 CG 언어를 이용해 쉐이더를 작성하는 부분**
+
+```csharp
+CGPROGRAM /// CG Shader Code
+/// 1
+#pragma surface surf Standard fullforwardshadows
+
+#pragma target 3.0
+/// /1
+
+sampler2D _MainTex;
+
+/// 2
+struct Input
+{
+  float2 uv_MainTex;
+};
+/// /2
+
+half _Glossiness;
+half _Metallic;
+fixed4 _Color;
+
+UNITY_INSTANCING_BUFFER_START(Props)
+  // put more per-instance properties here
+UNITY_INSTANCING_BUFFER_END(Props)
+
+/// 3
+void surf (Input IN, inout SurfaceOutputStandard o)
+{
+  fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+  o.Albedo = c.rgb;
+  o.Metallic = _Metallic;
+  o.Smoothness = _Glossiness;
+  o.Alpha = c.a;
+}
+/// /3
+ENDCG /// /CG Shader Code
+```
+
+1. **설정**
+    
+    쉐이더의 조명 계산 설정이나 기타 세부적인 분기를 정해주는 부분. 전처리, **Snippet** 으로 부름
+    
+2. **구조체**
+    
+    엔진으로부터 받아와야 하는 데이터 
+    
+3. **함수**
+    
+    색상이나 이미지가 출력되는 부분
+    
+
+- **1, 2, 3에 속하지 않는** 빈자리는 변수 선언부
+- **UNITY_INSTANCING_BUFFER_START ~ END**
+    - Shader에 GPU 인스턴싱 기능이 추가되어 생긴 영역
+    - GPU 인스턴싱 기능 활성화하면 Render시 같은 Material은 한번에 그려 DrawCall을 줄일 수 있다.
+        - Shader 작성시 객체별로 Property값을 다르게 줄 수 있다.
+
+![Untitled (2)](https://user-images.githubusercontent.com/90912270/183645373-c6ea4c4a-3079-43ed-b54b-f5c157b04c0b.png)
+
+### Shader를 이용해 흑백, Alpha값을 이용해 두 Texture를 섞은 이미지
+
+![Untitled (1)](https://user-images.githubusercontent.com/90912270/183641356-f403ba54-2f7f-43cf-bc9a-5b6637a38d3a.png)
+
+</ol>
+
+</div>
+
+</details>
