@@ -350,3 +350,63 @@ ENDCG /// /CG Shader Code
 </div>
 
 </details>
+
+<details>
+
+<summary> 3주차 </summary>
+
+<div markdown = “1”>
+
+<ol>
+
+# 3주차
+
+> **UV를 이용하는 법**
+> 
+
+![Untitled (4)](https://user-images.githubusercontent.com/90912270/185145994-8bb368aa-53a7-439a-b526-4db7d9e1ce38.png)
+
+UV란 Texture의 Pixel 좌표를 Lerp값으로 표현한 것이다.
+
+OpenGL에서는 좌하단이 시작점이지만 DirectX에선 좌상단이 시작점이며
+
+U는 Texture의 가로, V는 Texture의 세로 값이다.
+
+> **UV를 시각적으로 표현해보기**
+> 
+
+![Untitled (3)](https://user-images.githubusercontent.com/90912270/185145965-56da5a81-093f-4a1f-a6df-652af3228282.png)
+
+각각 Albedo에 U, V, float3(U,V,0) 을 넣은 결과이다.
+
+**U값**이 0에 가까울땐 검정, 1에 가까울 땐 흰색으로 **가로로 색이 바뀌는 것**을 확인 할 수 있다.
+
+**V값**이 0에 가까울땐 검정, 1에 가까울 땐 흰색으로 **세로로 색이 바뀌는 것**을 확인 할 수 있다.
+
+세 번째 Texture의 경우 U 값은 Albedo의 r값, V 값은 g값에 대입했을 때 **색의 변화를 확인**할 수 있는데, U와 V 두 값이 1에 가까워질수록 **색이 섞이는 모습을 확인**할 수 있다.
+
+> **UV 이동하기**
+> 
+    
+![Untitled (2)](https://user-images.githubusercontent.com/90912270/185145913-820e641c-529f-4a87-9f41-da49174c491a.png)
+
+첫 번째 Texture의 경우 UV값에 0.5를 더해주고 확인하니 좌하단으로 내려가서 넘어간 영역이 반대편으로 나온 듯한 모습으로 그려진다.
+
+두 번째, 세 번째 Texture는 이러한 점을 이용하여 UV값과 **_Time변수**와 **MultiTexture**로 불타오르는 듯한 연출을 할 수 있다.
+
+> **VertexColor 이용해보기**
+> 
+
+![Untitled (1)](https://user-images.githubusercontent.com/90912270/185145864-dda995c4-0647-446e-9038-5c40fc0325ba.png)
+
+아무런 작업을 하지 않은 좌측은 VertexColor가 흰색(1,1,1) 이고 우측은 내가 원하는 색으로 VertexColor를 색칠했다.
+
+![Untitled](https://user-images.githubusercontent.com/90912270/185145832-5954545c-029d-43ee-a826-7170858a5688.png)
+
+Vertex컬러와 Lerp연산을 통해 4가지 Texture를 섞을 수 있다.
+
+</ol>
+
+</div>
+
+</details>
