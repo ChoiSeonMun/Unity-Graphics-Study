@@ -410,3 +410,61 @@ Vertex컬러와 Lerp연산을 통해 4가지 Texture를 섞을 수 있다.
 </div>
 
 </details>
+
+
+<details>
+
+<summary> 4주차 </summary>
+
+<div markdown = “1”>
+
+<ol>
+
+
+### Standard Shader
+
+- 물리 기반 쉐이더
+    - 주변 환경에 따른 재질 변화를 물리 법칙에 기반하여 실시간으로 재질을 구현하는 쉐이더 표현 기법
+    
+
+### **Metallic**
+
+- 재질이 금속인지 결정하는 기능, 0이면 비금속, 1이면 금속 재질이다.
+- 0과 1만 사용하는 것이 정확한 물리 기반 쉐이더를 다루는 방법이다.
+
+### **Smoothness**
+
+- 재질의 거칠기를 정하는 기능, 0이면 거칠어 난반사가 일어나고 1이면 매끄러워서 정반사가 일어난다.
+- 어떤 물건이든 0과 1인 재질은 없기에 적절히 섞어 사용하는 것이 좋다
+
+### **Normal Map**
+
+- 실제 디테일이 없는 부분을 디테일이 있는 것처럼 보이게 만들기 위한 텍스쳐
+
+### **Occlusion**
+
+- Ambient Occlusion이라고도 부른다.
+- 구석진 부분의 추가적인 음영을 표현하는 기능
+
+### **유니티에 내장된 라이팅 구조**
+
+1. **Lambert**
+    - Specular 없음
+    - SurfaceOutput 구조체 사용
+2. **Blinn Phong**
+    - Lambert공식에 가벼운 Specular 추가
+    - 보는 각도와 조명 각도로 계산된 특정 색의 하이라이트 동그라미로 표현
+    - SurfaceOutput 구조체 사용
+3. **Standard**
+    - 물리 기반 쉐이더
+    - 주변 환경을 반사하여 Specular 구현
+    - Difuuse와 Specular가 에너지 보존 법칙에 의해 서로 보완관계를 자동적으로 가짐
+    - Specular의 색이 Metallic 속성에 따라 자동적으로 결정됨
+    - SurfaceOutputStandard 구조체와 SurfaceOutputStandardSpecular 구조체 사용
+
+
+</ol>
+
+</div>
+
+</details>
